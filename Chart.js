@@ -1056,7 +1056,24 @@ window.Chart = function(context){
 		valueBounds = getValueBounds();
 		//Check and set the scale
 		labelTemplateString = (config.scaleShowLabels)? config.scaleLabel : "";
-		if (!config.scaleOverride){
+    var maxsumvalue = 0;
+    for (var j=0; j<data.datasets[0].data.length; j++){
+      var sumvalue = 0;
+      for (var i=0; i<data.datasets.length; i++){
+        sumvalue = sumvalue+data.datasets[i].data[j];
+      }
+      if (sumvalue > maxsumvalue) {
+        maxsumvalue = sumvalue;
+      }
+    }
+    if (Math.round(maxsumvalue) == 100) {
+      calculatedScale = {
+        steps : 10,
+        stepValue : 10,
+        graphMin : 0,
+        labels : ["10","20","30","40","50","60","70","80","90","100"]
+      }
+    } else if (!config.scaleOverride){
 			calculatedScale = calculateScale(scaleHeight,valueBounds.maxSteps,valueBounds.minSteps,valueBounds.maxValue,valueBounds.minValue,labelTemplateString);
 		}
 		else {
