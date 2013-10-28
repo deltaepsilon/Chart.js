@@ -1083,11 +1083,7 @@ window.Chart = function(context){
 				graphMin : config.scaleStartValue,
 				labels : []
 			}
-			for (var i=0; i<calculatedScale.steps; i++){
-				if(labelTemplateString){
-				calculatedScale.labels.push(tmpl(labelTemplateString,{value:(config.scaleStartValue + (config.scaleStepWidth * i)).toFixed(getDecimalPlaces (config.scaleStepWidth))}));
-				}
-			}
+			populateLabels(labelTemplateString, calculatedScale.labels,calculatedScale.steps,config.scaleStartValue,config.scaleStepWidth);
 		}
 		
 		scaleHop = Math.floor(scaleHeight/calculatedScale.steps);
@@ -1704,5 +1700,3 @@ window.Chart = function(context){
 	    return data ? fn( data ) : fn;
 	  };
 }
-
-
